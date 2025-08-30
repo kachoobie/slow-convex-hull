@@ -17,6 +17,9 @@ class SlowConvexHull
         void dump();
         void generateConvexHull();
         std::vector<Point> getConvexHullClockwise();
+    
+    private:
+        void orderConvexHullClockwise();
 };
 
  #endif

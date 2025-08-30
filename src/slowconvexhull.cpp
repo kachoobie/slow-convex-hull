@@ -14,6 +14,24 @@ void SlowConvexHull::dump()
     convexHull.clear();
 }
 
+void SlowConvexHull::orderConvexHullClockwise()
+{
+    Segment added = this->convexHull.at(0);
+    std::vector<Segment> clockwiseConvexHull;
+    clockwiseConvexHull.push_back(added);
+    while (clockwiseConvexHull.size() < this->convexHull.size()) {
+        for (int i = 0; i < this->convexHull.size(); ++i) {
+            Segment current = this->convexHull.at(i);
+            if (current.start.isEqual(added.end)) {
+                added = current;
+                clockwiseConvexHull.push_back(added);
+                break;
+            }
+        }
+    }
+    this->convexHull = clockwiseConvexHull;
+}
+
 void SlowConvexHull::generateConvexHull()
 {
     if (this->convexHull.size() > 0) {
@@ -51,8 +69,16 @@ void SlowConvexHull::generateConvexHull()
             }
         }
     }
+    this->orderConvexHullClockwise();
 }
+
 std::vector<Point> SlowConvexHull::getConvexHullClockwise()
 {
-    return std::vector<Point>();
+    std::vector<Point> convexHullPoints;
+    std::vector<Segment>::iterator it;
+    for (it = this->convexHull.begin(); it < this->convexHull.end(); ++it) {
+        Segment current = *it;
+        convexHullPoints.push_back(current.start);
+    }
+    return convexHullPoints;
 }

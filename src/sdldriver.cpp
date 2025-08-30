@@ -46,11 +46,12 @@ SDL_AppResult SDLDriver::drive()
                 } else if (event.key.scancode == SDL_SCANCODE_C) {
                     sch.dump();
                 } else if (event.key.scancode == SDL_SCANCODE_RETURN) {
-                    std::cout << "Finding convex hull" << std::endl;
+                    std::cout << "Finding convex hull..." << std::endl;
                     sch.generateConvexHull();
-                    std::cout << sch.convexHull.size() << std::endl;
-                    for (int i = 0; i < sch.convexHull.size(); ++i) {
-                        std::cout << sch.convexHull.at(i).toString() << std::endl;
+                    std::vector<Segment> currentConvexHull = sch.convexHull;
+                    std::cout << "Number of segments: " << currentConvexHull.size() << std::endl;
+                    for (int i = 0; i < currentConvexHull.size(); ++i) {
+                        std::cout << currentConvexHull.at(i).toString() << std::endl;
                     }
                 } else if (event.key.scancode == SDL_SCANCODE_T) {
                     for (int i = 0; i < 1000; ++i) {
