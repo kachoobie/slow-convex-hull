@@ -66,26 +66,25 @@ SDL_AppResult SDLDriver::drive()
             }
         }
 
-
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
         std::vector<Point>::iterator it;
         std::vector<Point> pointSet = sch.pointSet;
         for (it = pointSet.begin(); it != pointSet.end(); ++it) {
             Point currentPoint = *it;
             SDL_FRect vertex;
             vertex.x = currentPoint.x, vertex.y = currentPoint.y, vertex.w = pixelSize, vertex.h = pixelSize;
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
             if (!SDL_RenderFillRect(renderer, &vertex)) {
                 SDL_Log("Could not draw rectangle: %s", SDL_GetError());
             }
         }
 
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
         std::vector<Segment>::iterator segit;
         std::vector<Segment> convexHull = sch.convexHull;
         for (segit = convexHull.begin(); segit != convexHull.end(); ++segit) {
             Segment currentSegment = *segit;
             Point point1 = currentSegment.start;
             Point point2 = currentSegment.end;
-            SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
             if (!SDL_RenderLine(renderer, point1.x, point1.y, point2.x, point2.y)) {
                 SDL_Log("Could not draw line: %s", SDL_GetError());
             }
