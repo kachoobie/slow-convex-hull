@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "../include/sdldriver.h"
 
 SDLDriver::SDLDriver(int width, int height, int size, const char *windowName)
@@ -47,12 +46,11 @@ SDL_AppResult SDLDriver::drive()
                     sch.dump();
                 } else if (event.key.scancode == SDL_SCANCODE_RETURN) {
                     std::cout << "Finding convex hull..." << std::endl;
+                    auto startTime = std::chrono::high_resolution_clock::now();
                     sch.generateConvexHull();
-                    std::vector<Segment> currentConvexHull = sch.convexHull;
-                    std::cout << "Number of segments: " << currentConvexHull.size() << std::endl;
-                    for (int i = 0; i < currentConvexHull.size(); ++i) {
-                        std::cout << currentConvexHull.at(i).toString() << std::endl;
-                    }
+                    auto endTime = std::chrono::high_resolution_clock::now();
+                    const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+                    std::cout << "Convex hull generated in " << duration << std::endl;
                 } else if (event.key.scancode == SDL_SCANCODE_T) {
                     for (int i = 0; i < 1000; ++i) {
                         std::random_device rd;
